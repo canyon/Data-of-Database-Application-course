@@ -9,6 +9,7 @@
 from bs4 import BeautifulSoup
 import requests
 import random
+import calendar
 
 # Magazine
 class Magazine:
@@ -136,12 +137,17 @@ def create_OrderH_OrderList():
     cno = []
     odate = []
 
-    year = range(2012, 2020)
+    year = range(2010, 2020)
     month = range(1, 13)
-    day = range(1, 31)
-    hour = range(25)
-    minute = range(61)
-    second = range(61)
+    day31 = [1, 3, 5, 7, 8, 10, 12]
+    day30 = [4, 6, 9, 11]
+    day_135781012 = range(1, 31)
+    day_46911 = range(1, 30)
+    day_2 = range(1, 28)
+    day_leap2 = range(1, 29)
+    hour = range(24)
+    minute = range(60)
+    second = range(60)
 
     mno = list(range(120))
     onum = range(1, 101)
@@ -165,8 +171,21 @@ def create_OrderH_OrderList():
 
         # 订购日期Odate
         tmp_Y = random.choice(year)
+        
+        # 判断是否是闰年
+        leap = True
+        leap = calendar.isleap(tmp_Y)
+
         tmp_M = random.choice(month)
-        tmp_D = random.choice(day)
+        if tmp_M in day30:
+            tmp_D = random.choice(day_135781012)
+        elif tmp_M in day31:
+            tmp_D = random.choice(day_46911)
+        else:
+            tmp_D = random.choice(day_2)
+        if leap and tmp_M == 2:
+            tmp_D = random.choice(day_leap2)
+
         tmp_h = random.choice(hour)
         tmp_m = random.choice(minute)
         tmp_s = random.choice(second)

@@ -2,7 +2,15 @@
 
 >    大连海事大学-SQL SERVER 数据库应用技术 实验内容和实验报告可以用到的数据
 
+## 使用
 
+1.  安装python3→[官网](https://www.python.org/downloads/)
+2.  安装requests库：`pip install requests`
+3.  将`create_data.py`下载或克隆到本地
+4.  进入python文件的目录下，打开命令提示符，输入`python create_data.py `
+5.  会在同级目录下生成4个文本文件，里面是用于数据库`insert`语句插入表的值
+
+---
 
 SQL SERVER 数据库应用技术
 实验内容和实验报告要求
