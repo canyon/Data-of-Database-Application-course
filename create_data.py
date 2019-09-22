@@ -72,16 +72,18 @@ def create_magazine():
     mtype = list(set(mtype))
 
     magazines = []
-    with open('magazine.txt', 'w') as f:
-        for i in range(len(mno)):
-            f.write('(\'' + mno[i] + '\',' + 
-                    '\'' + mname[i].text[:10] + '\',' + 
-                    '\'' + random.choice(mtype) + '\',' + 
-                    '\'' + mcity[i] + '\',' + 
-                    str(round(float(miprice[i]), 2)) + ',' + 
-                    str(round(float(moprice[i]), 2)) + '),\n'
-                )
-            magazines.append(Magazine(mno[i], mname[i], random.choice(mtype), mcity[i], miprice[i], moprice[i]))
+    f = open('magazine.txt', 'w')
+    f.write('insert into magazine values\n')
+    for i in range(len(mno)):
+        f.write('(\'' + mno[i] + '\',' + 
+                '\'' + mname[i].text[:10] + '\',' + 
+                '\'' + random.choice(mtype) + '\',' + 
+                '\'' + mcity[i] + '\',' + 
+                str(round(float(miprice[i]), 2)) + ',' + 
+                str(round(float(moprice[i]), 2)) + '),\n'
+            )
+    f.close()
+        # magazines.append(Magazine(mno[i], mname[i], random.choice(mtype), mcity[i], miprice[i], moprice[i]))
 
     return miprice, moprice
 
@@ -101,7 +103,13 @@ def create_Customer():
         else:
             tmp = 'C' + str(i)
         cno.append(tmp)
-    sno = cno[::-1]
+
+    cno_length = len(cno)
+    cno_length_34 = int(cno_length*3/4)
+    for i in range(cno_length_34):
+        sno.append(random.choice(cno[cno_length_34:]))
+    for i in range(cno_length_34, cno_length):
+        sno.append('Null')
     
     url = ['https://www.zazhi.com.cn/qikan/', 
             'https://www.zazhi.com.cn/qikan/s0l0l0l0l0l0l0l0l0l002.html', 
@@ -122,15 +130,17 @@ def create_Customer():
     
     ccity = ccity[::-1]
     magazines = []
-    with open('customer.txt', 'a') as f:
-        for i in range(len(cno)):
-            f.write('(\'' + cno[i] + '\',' + 
-                    '\'' + cname[i] + '\',' + 
-                    '\'' + ccity[i] + '\',' + 
-                    '\'' + sno[i] + '\',' + 
-                    '\'' + random.choice(ctype) + '\'),\n'
-                )
-            # magazines.append(Magazine(mno[i], mname[i], random.choice(mtype), mcity[i], miprice[i], moprice[i]))
+    f = open('customer.txt', 'w')
+    f.write('insert into customer values\n')
+    for i in range(len(cno)):
+        f.write('(\'' + cno[i] + '\',' + 
+                '\'' + cname[i] + '\',' + 
+                '\'' + ccity[i] + '\',' + 
+                '\'' + sno[i] + '\',' + 
+                '\'' + random.choice(ctype) + '\'),\n'
+            )
+    f.close()
+        # magazines.append(Magazine(mno[i], mname[i], random.choice(mtype), mcity[i], miprice[i], moprice[i]))
 
 def create_OrderH_OrderList():
     olno = []
@@ -204,6 +214,7 @@ def create_OrderH_OrderList():
         
     # 创建子订单
     order_list = open('order_list.txt', 'w')
+    order_list.write('insert into OrderList values\n')
     sub_list = []
     for i in range(len(olno)):
         # 杂志代码Mno
@@ -243,6 +254,7 @@ def create_OrderH_OrderList():
 
     # 创建总订单
     order_h = open('order_h.txt', 'w')
+    order_h.write('insert into orderh values\n')
     for i in olno:
         omsum = 0
         opsum = 0
